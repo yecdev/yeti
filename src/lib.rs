@@ -4,6 +4,7 @@ use std::str::FromStr;
 use zcash_client_backend::wallet::AccountId;
 use thiserror::Error;
 use crate::grpc::compact_tx_streamer_client::CompactTxStreamerClient;
+use tonic::transport::Certificate;
 
 pub const DATA_PATH: &str = "data.sqlite3";
 pub const CACHE_PATH: &str = "cache.sqlite3";
@@ -81,6 +82,15 @@ pub struct Opt {
     pub unit: ZECUnit,
 }
 
+impl Opt {
+    pub fn default() -> Opt {
+        Opt {
+            lightnode_url: constants::LIGHTNODE_URL.to_string(),
+            unit: ZECUnit::Zec,
+        }
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Tx {
     height: i64,
@@ -105,7 +115,7 @@ pub struct TxOut {
     ovk: String,
 }
 
-pub const MAX_REORG_DEPTH: u64 = ANCHOR_OFFSET as u64;
+pub const MAX_REORG_DEPTH: u64 = 0u64;
 
 #[derive(Error, Debug, Clone)]
 pub enum WalletError {
@@ -126,7 +136,9 @@ pub enum WalletError {
 async fn connect_lightnode(lightnode_url: String) -> Result<CompactTxStreamerClient<Channel>> {
     let mut channel = tonic::transport::Channel::from_shared(lightnode_url.clone())?;
     if lightnode_url.starts_with("https") {
-        let tls = ClientTlsConfig::new();
+        let pem = include_bytes!("ca.pem");
+        let ca = Certificate::from_pem(pem);
+        let tls = ClientTlsConfig::new().ca_certificate(ca);
         channel = channel.tls_config(tls)?;
     }
     let client = CompactTxStreamerClient::connect(channel).await?;
@@ -145,7 +157,7 @@ pub mod constants {
         testnet::HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY;
     pub const HRP_SAPLING_PAYMENT_ADDRESS: &str = testnet::HRP_SAPLING_PAYMENT_ADDRESS;
     pub const COIN_TYPE: u32 = testnet::COIN_TYPE;
-    pub const LIGHTNODE_URL: &str = "https://testnet.lightwalletd.com:9067";
+    pub const LIGHTNODE_URL: &str = "http://lw.hanh.me:9067";
 }
 
 #[cfg(feature = "mainnet")]
