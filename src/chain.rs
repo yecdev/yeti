@@ -12,14 +12,14 @@ use zcash_client_backend::{
 use zcash_client_sqlite::{
     chain::init::init_cache_database,
     wallet::init::init_wallet_db,
-    BlockDB, WalletDB,
+    BlockDb, WalletDb,
 };
 
 pub fn init_db() -> Result<()> {
-    let db_data = WalletDB::for_path(DATA_PATH, NETWORK)?;
+    let db_data = WalletDb::for_path(DATA_PATH, NETWORK)?;
     init_wallet_db(&db_data)?;
 
-    let db_cache = BlockDB::for_path(CACHE_PATH)?;
+    let db_cache = BlockDb::for_path(CACHE_PATH)?;
     init_cache_database(&db_cache)?;
 
     Ok(())
@@ -28,7 +28,7 @@ pub fn init_db() -> Result<()> {
 pub async fn sync(lightnode_url: &str) -> Result<()> {
     let lightnode_url = lightnode_url.to_string();
     let cache_connection = Connection::open(CACHE_PATH)?;
-    let wallet_db = WalletDB::for_path(DATA_PATH, NETWORK)?;
+    let wallet_db = WalletDb::for_path(DATA_PATH, NETWORK)?;
     let (_, last_bh) = wallet_db
         .block_height_extrema()?
         .ok_or(WalletError::AccountNotInitialized)?;
@@ -77,8 +77,8 @@ pub async fn sync(lightnode_url: &str) -> Result<()> {
 }
 
 pub fn scan() -> Result<()> {
-    let cache = BlockDB::for_path(CACHE_PATH)?;
-    let db_read = WalletDB::for_path(DATA_PATH, NETWORK)?;
+    let cache = BlockDb::for_path(CACHE_PATH)?;
+    let db_read = WalletDb::for_path(DATA_PATH, NETWORK)?;
     let mut data = db_read.get_update_ops()?;
     scan_cached_blocks(&NETWORK, &cache, &mut data, None)?;
 

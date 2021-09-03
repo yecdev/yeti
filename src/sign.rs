@@ -5,7 +5,7 @@ use zcash_client_backend::encoding::{decode_extended_spending_key, decode_paymen
 use zcash_primitives::{
     consensus::{BlockHeight, BranchId},
     merkle_tree::IncrementalWitness,
-    primitives::{Diversifier, Rseed},
+    sapling::{Diversifier, Rseed},
     sapling::Node,
     transaction::{builder::Builder, components::Amount},
 };

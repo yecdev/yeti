@@ -159,5 +159,5 @@ pub mod constants {
         mainnet::HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY;
     pub const HRP_SAPLING_PAYMENT_ADDRESS: &str = mainnet::HRP_SAPLING_PAYMENT_ADDRESS;
     pub const COIN_TYPE: u32 = mainnet::COIN_TYPE;
-    pub const LIGHTNODE_URL: &str = "https://mainnet.lightwalletd.com:9067";
+    pub const LIGHTNODE_URL: &str = "https://lite.ycash.xyz:9067";
 }

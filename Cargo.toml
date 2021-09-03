@@ -1,5 +1,5 @@
 [package]
-name = "zcash-coldwallet"
+name = "yeti"
 version = "0.1.0"
 authors = ["Hanh <hanh425@gmail.com>"]
 edition = "2018"
@@ -33,20 +33,20 @@ anyhow = "1.0.38"
 tonic-build = { version = "0.3.1", features = ["prost"] }
 
 [dependencies.zcash_client_backend]
-git = "https://github.com/zcash/librustzcash.git"
-rev = "b37b5876f2442a4115e553b998d7549045a87fbf"
+git = "https://github.com/yodl/libyec.git"
+rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
 
 [dependencies.zcash_client_sqlite]
-git = "https://github.com/zcash/librustzcash.git"
-rev = "b37b5876f2442a4115e553b998d7549045a87fbf"
+git = "https://github.com/yodl/libyec.git"
+rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
 
 [dependencies.zcash_primitives]
-git = "https://github.com/zcash/librustzcash.git"
-rev = "b37b5876f2442a4115e553b998d7549045a87fbf"
+git = "https://github.com/yodl/libyec.git"
+rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
 
 [dependencies.zcash_proofs]
-git = "https://github.com/zcash/librustzcash.git"
-rev = "b37b5876f2442a4115e553b998d7549045a87fbf"
+git = "https://github.com/yodl/libyec.git"
+rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
 
 [features]
 mainnet = []

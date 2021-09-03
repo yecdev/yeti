@@ -1,8 +1,8 @@
 use clap::Clap;
 use std::fs::File;
-use zcash_coldwallet::sign::sign_tx;
-use zcash_coldwallet::transact::submit;
-use zcash_coldwallet::{
+use yeti::sign::sign_tx;
+use yeti::transact::submit;
+use yeti::{
     account::{init_account, get_balance},
     chain::{init_db, sync, scan},
     checkpoint::find_height,
