@@ -1,6 +1,7 @@
-# ZCash Cold Wallet
+# Yeti: A Ycash Cold Wallet
 
-This is command-line utility implementing a cold wallet for ZCash.
+This is command-line utility implementing a cold wallet for Ycash. It is a fork of
+[hanh00's Zcash Cold Wallet](https://github.com/hhanh00/zcash-cold-wallet).
 
 For a detailed explanation on what a cold wallet is, please refer
 to [Cold Storage](https://en.bitcoin.it/wiki/Cold_storage).
@@ -9,16 +10,14 @@ to [Cold Storage](https://en.bitcoin.it/wiki/Cold_storage).
 
 **The code has not been audited and should be used for experimental purposes only.**
 
-Release Binaries are for TESTNET coins only.
-
 ## What does it do?
 
-- ZCash Coldwallet can help you create and spend paper wallets
-- **It helps you spend from any z-addr as long as you have the secret key**
-- **It keeps your secret key usage from any online computer**. 
-- It supports shielded (sapling) addresses
+- Yeti can help you create and spend paper wallets
+- **It helps you spend from any y-address as long as you have the secret key**
+- **It keeps your secret key usage from any online computer** 
+- It supports shielded (Sapling) addresses
 
-> This program splits the process of making a spending transaction in two.
+This program splits the process of making a spending transaction in two.
 Using two air-gapped computers, you prepare the transaction from the online computer
 which only has the viewing key. Then you transfer the transaction data to the offline
 computer that has the secret key. On the offline computer, you complete the transaction
@@ -30,7 +29,7 @@ In this workflow, your secret key never leaves the offline computer.
 ## What doesn't it do?
 
 - It will not work well as a daily wallet. For this use case, mobile wallets are better suited.
-- It does not support t-addr or sprout addresses
+- It does not support t-address or sprout addresses.
 
 # Requirements
 
@@ -48,8 +47,8 @@ and by default the tool will use a public lightwalletd server.
 # Installation
 
 - Copy the binary on both the online and offline computers.
-- Copy the zcash params from the online computer to the offline computer. They are in the `.zcash-params`
-folder on Linux if you have installed `zcashd`. Or use this [download script](https://github.com/zcash/zcash/blob/master/zcutil/fetch-params.sh)
+- Copy the Zcash params from the online computer to the offline computer. They are in the `.zcash-params`
+folder on Linux if you have installed `ycashd`. Or use this [download script](https://github.com/zcash/zcash/blob/master/zcutil/fetch-params.sh)
 
 # Usage
 
@@ -59,7 +58,7 @@ folder on Linux if you have installed `zcashd`. Or use this [download script](ht
 
 Pass the `-l` option to specify the URL of the lightwalletd
 
-`zcash-coldwallet -l http://127.0.0.1:9067 sync`
+`yeti -l http://127.0.0.1:9067 sync`
 
 Only `init-account`, `sync` and `submit` require the lightwalletd server.
 
@@ -69,7 +68,7 @@ Obviously, the offline computer does not need lightwalletd.
 
 ## Generate new wallet
 
-`zcash-coldwallet generate`
+`yeti generate`
 
 Example Output:
 
@@ -81,7 +80,7 @@ Viewing Key: zxviewtestsapling1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2
 Address: ztestsapling16vq8ue73sd3hqzjf4tlcgt2lkww4dl45te7rppwyafrjgxtgw9ac9vkxlyc0nehr4f5g58um63r
 ```
 
-Note: zcash-cold-wallet does not store this information. 
+Note: Yeti does not store this information. 
 
 **YOU MUST KEEP IT SAFE!**
 
@@ -90,7 +89,7 @@ Note: zcash-cold-wallet does not store this information.
 On the online computer, you need to run this command once. This creates the cache database
 where we store the blocks we get from the lightwalletd server and the account database.
 
-`zcash-coldwallet init-db`
+`yeti init-db`
 
 ## Initialize Account database
 
@@ -99,13 +98,13 @@ Then import your viewing key to the account database.
 If this is a new account:
 
 ```
- zcash-coldwallet init-account zxviewtestsapling1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2xrakjtfq9qw6wzjgccd0249gc86dqhzt0e5fm48p7luzfvx5e5fgpn7ecu33yk4pdjxp53xsyerjwmv7j4t64vvsxd6a0qzzqecpf93rp8n473hkh0rwrtrsmexwxnhm3aydujfcva7ax8nxn9ckfjug3q92raw4vhp2f8q36g64muzl3e53d6zm897lq8gg3x7upjxwd7j7m4mtmhwjjx9pmyt0nchzn4xk
+ yeti init-account zxviewtestsapling1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2xrakjtfq9qw6wzjgccd0249gc86dqhzt0e5fm48p7luzfvx5e5fgpn7ecu33yk4pdjxp53xsyerjwmv7j4t64vvsxd6a0qzzqecpf93rp8n473hkh0rwrtrsmexwxnhm3aydujfcva7ax8nxn9ckfjug3q92raw4vhp2f8q36g64muzl3e53d6zm897lq8gg3x7upjxwd7j7m4mtmhwjjx9pmyt0nchzn4xk
 ```
 
 If this is an old account
 
 ```
- zcash-coldwallet init-account zxviewtestsapling1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2xrakjtfq9qw6wzjgccd0249gc86dqhzt0e5fm48p7luzfvx5e5fgpn7ecu33yk4pdjxp53xsyerjwmv7j4t64vvsxd6a0qzzqecpf93rp8n473hkh0rwrtrsmexwxnhm3aydujfcva7ax8nxn9ckfjug3q92raw4vhp2f8q36g64muzl3e53d6zm897lq8gg3x7upjxwd7j7m4mtmhwjjx9pmyt0nchzn4xk 2020-05-02
+ yeti init-account zxviewtestsapling1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2xrakjtfq9qw6wzjgccd0249gc86dqhzt0e5fm48p7luzfvx5e5fgpn7ecu33yk4pdjxp53xsyerjwmv7j4t64vvsxd6a0qzzqecpf93rp8n473hkh0rwrtrsmexwxnhm3aydujfcva7ax8nxn9ckfjug3q92raw4vhp2f8q36g64muzl3e53d6zm897lq8gg3x7upjxwd7j7m4mtmhwjjx9pmyt0nchzn4xk 2020-05-02
 ```
  
 Notice the date that was passed as last argument. It is the account "birthday".
@@ -121,7 +120,7 @@ fact, a few days of margin does not harm.
 Connect to the lightwalletd server (by default ligthwalletd.com) and grab the latest blocks.
 It also scans the new blocks to update your account information. This command runs online.
 
-`zcash-coldwallet sync`
+`yeti sync`
 
 ```
 Starting height: 1288000
@@ -144,7 +143,7 @@ a RAM drive speeds up the process greatly. On Linux machines,
 Get your current balance. If the result is not what you expect, check that you are
 synced. *This command works offline*.
 
-`zcash-coldwallet get-balance`
+`yeti get-balance`
 
 ```
 Balance: 1.0
@@ -152,7 +151,7 @@ Balance: 1.0
 
 ## Prepare Spending Transaction
 
-`zcash-coldwallet prepare-tx ztestsapling16vq8ue73sd3hqzjf4tlcgt2lkww4dl45te7rppwyafrjgxtgw9ac9vkxlyc0nehr4f5g58um63r 0.4 tx.json`
+`yeti prepare-tx ztestsapling16vq8ue73sd3hqzjf4tlcgt2lkww4dl45te7rppwyafrjgxtgw9ac9vkxlyc0nehr4f5g58um63r 0.4 tx.json`
 
 The output will be a json file `tx.json`. This
 needs to be signed on the offline computer.
@@ -163,7 +162,7 @@ Transfer the json file to the offline computer by using a USB key for example (d
 Now you need to sign with your secret key.
 
 ~~~
-zcash-coldwallet sign secret-extended-key-test1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2xrakjtfq9qw6wzjgemcuhmul4a34k2j0vlwk5rys9v57rr94zxu2j0f890qgsmfx5xq895m2glaphpftlar82w4duy2zcgaxtscy3hml9nxntxkzzhaccqysmexwxnhm3aydujfcva7ax8nxn9ckfjug3q92raw4vhp2f8q36g64muzl3e53d6zm897lq8gg3x7upjxwd7j7m4mtmhwjjx9pmyt0nc7u8mw6 tx.json tx.raw
+yeti sign secret-extended-key-test1qvf49wh8qqqqpqple3k2uqm97rkf24g5s5w5k40kdjyn7wnx2xrakjtfq9qw6wzjgemcuhmul4a34k2j0vlwk5rys9v57rr94zxu2j0f890qgsmfx5xq895m2glaphpftlar82w4duy2zcgaxtscy3hml9nxntxkzzhaccqysmexwxnhm3aydujfcva7ax8nxn9ckfjug3q92raw4vhp2f8q36g64muzl3e53d6zm897lq8gg3x7upjxwd7j7m4mtmhwjjx9pmyt0nc7u8mw6 tx.json tx.raw
 ~~~
 
 Note: This command will print out the payment address and the amount.
@@ -177,7 +176,7 @@ Transfer this file back to the first computer.
 ## Broadcast the signed transaction
 
 ~~~
-zcash-coldwallet submit tx.raw
+yeti submit tx.raw
 ~~~
 
 The output should look like:
@@ -223,8 +222,8 @@ balance.
   
 - How about using a hardware wallet?
 
-  At this point, hardware wallets do not support z-addr. In any case, a hardware wallet is special
-equipment that not everyone is comfortable using. ZCash Cold Wallet code is open source and
+  At this point, hardware wallets do not support shielded addresses (y-addresses). In any case, a hardware wallet is special
+  equipment that not everyone is comfortable using. Yeti code is open source and
   does not rely on any proprietary logic. Also, hardware wallets break, but a paper wallet
   does not.
   
@@ -232,7 +231,7 @@ equipment that not everyone is comfortable using. ZCash Cold Wallet code is open
 
   To keep the tool as simple as possible, the tool is command line only.
 
-- Can I import more than one z-addr?
+- Can I import more than one y-address?
 
   No, it supports a single address. But, all the data is stored in a couple of files, you can keep
 several sets of files.
@@ -242,16 +241,6 @@ several sets of files.
   **It does not store your secret anywhere**. Your viewing key is stored in the online computer, but 
 your secret key is not kept in the online computer or the offline computer. The tool uses two SQLite
   database files. If you want to wipe out everything, just delete these two files.
-
-- Does this tool work with mainnet coins?
-
-  The release binaries are for TESTNET coins. 
-  At this point, if you want to use mainnet coins, you must build it yourself. Once the source code
-  is audited and approved by the ZOMG, mainnet binaries will be published as well.
-  
-  **By default this will work with TESTNET coins.** 
-  
-  See the section below for mainnet coins
   
 - (Advanced usage) Can I swap the account file (data.sqlite3)?
 
