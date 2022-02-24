@@ -7,13 +7,13 @@ use rusqlite::{Connection, NO_PARAMS};
 use zcash_client_backend::encoding::decode_extended_full_viewing_key;
 use zcash_client_sqlite::{
     wallet::init::{init_accounts_table, init_blocks_table},
-    WalletDb,
+    WalletDB,
 };
 use zcash_primitives::{block::BlockHash, consensus::BlockHeight};
 use anyhow::Context;
 
 pub async fn init_account(lightnode_url: &str, viewing_key: String, height: u64) -> Result<()> {
-    let db_data = WalletDb::for_path(DATA_PATH, NETWORK)?;
+    let db_data = WalletDB::for_path(DATA_PATH, NETWORK)?;
     let extfvks =
         decode_extended_full_viewing_key(HRP_SAPLING_EXTENDED_FULL_VIEWING_KEY, &viewing_key)?
             .ok_or(WalletError::Decode(viewing_key))?;

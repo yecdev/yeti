@@ -29,24 +29,13 @@ tracing-subscriber = { version = "0.2.7", default-features = false, features = [
 thiserror = "1.0.24"
 anyhow = "1.0.38"
 
+zcash_primitives = { git = "https://github.com/yecdev/libyec", rev = "3eff3bbb050cdeb5353ba0c373ca51616c12ad1a" }
+zcash_client_sqlite = { git = "https://github.com/yecdev/libyec", rev = "3eff3bbb050cdeb5353ba0c373ca51616c12ad1a"}
+zcash_client_backend = { git = "https://github.com/yecdev/libyec", rev = "3eff3bbb050cdeb5353ba0c373ca51616c12ad1a"}
+zcash_proofs = { git = "https://github.com/yecdev/libyec", rev = "3eff3bbb050cdeb5353ba0c373ca51616c12ad1a"}
+
 [build-dependencies]
 tonic-build = { version = "0.3.1", features = ["prost"] }
-
-[dependencies.zcash_client_backend]
-git = "https://github.com/yodl/libyec.git"
-rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
-
-[dependencies.zcash_client_sqlite]
-git = "https://github.com/yodl/libyec.git"
-rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
-
-[dependencies.zcash_primitives]
-git = "https://github.com/yodl/libyec.git"
-rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
-
-[dependencies.zcash_proofs]
-git = "https://github.com/yodl/libyec.git"
-rev = "ce4a217a8581bf50830742d25fdb416732eaf35a"
 
 [features]
 mainnet = []

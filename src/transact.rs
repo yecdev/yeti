@@ -3,17 +3,16 @@ use crate::{grpc::RawTransaction, Result, Tx, TxIn, TxOut, ACCOUNT, DATA_PATH, W
 use zcash_client_backend::{
     address::RecipientAddress, data_api::WalletRead, encoding::encode_payment_address,
 };
-use zcash_client_sqlite::WalletDb;
-use zcash_primitives::{
-    sapling::Rseed,
-    transaction::components::{amount::DEFAULT_FEE, Amount},
-};
+use zcash_client_sqlite::WalletDB;
+use zcash_primitives::primitives::Rseed;
+use zcash_primitives::transaction::components::Amount;
+use zcash_primitives::transaction::components::amount::DEFAULT_FEE;
 
 pub fn prepare_tx(to_addr: &str, amount: String, unit: &ZECUnit) -> Result<Tx> {
     let satoshis = unit.to_satoshis(&amount);
     let to_addr = RecipientAddress::decode(&NETWORK, to_addr).ok_or_else(|| WalletError::Decode(to_addr.to_string()))?;
     let amount = Amount::from_u64(satoshis).expect("Invalid amount");
-    let wallet_db = WalletDb::for_path(DATA_PATH, NETWORK)?;
+    let wallet_db = WalletDB::for_path(DATA_PATH, NETWORK)?;
     let fvks = wallet_db.get_extended_full_viewing_keys()?;
     let extfvk = &fvks[&ACCOUNT];
     let ovk = extfvk.fvk.ovk;
